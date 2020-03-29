@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(name='flask_restplus_data',
-      version='0.0.1',
+      version='0.0.2',
       description='Library inspired by Spring Data to perform Operations on datastores',
       license='MIT',
       url='https://github.com/nucklehead/flask-restplus-data',
