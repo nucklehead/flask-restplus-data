@@ -1,0 +1,6 @@
+database:
+  # This could be sql or mongo for now
+  type: sql
+  url:
+  pool_size: 10
+  migration_directory:

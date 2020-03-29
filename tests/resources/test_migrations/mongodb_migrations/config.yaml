@@ -1,0 +1,6 @@
+database:
+  # This could be sql or mongo for now
+  type: mongodb
+  url: mongodb://test
+  pool_size: 20
+  migration_directory: ./tests/resources/test_migrations/mongodb_migrations
