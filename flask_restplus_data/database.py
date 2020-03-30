@@ -64,7 +64,7 @@ class Database:
                 setattr(self, key, method)
             elif db_type is DatabaseType.SQL:
                 if key is 'Id':
-                   method = partial(db.Column, db.String, primary_key=True)
+                   method = partial(db.Column, primary_key=True)
                 elif key is 'Link':
                    method = partial(Database.handle_link, db)
                 else:
