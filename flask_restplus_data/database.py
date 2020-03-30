@@ -1,5 +1,6 @@
 import inspect
 import logging
+import os
 from typing import Any
 
 import confuse
@@ -88,7 +89,13 @@ class Database:
 
 
 class FlaskData(Database):
-    def __init__(self, app: Flask):
+    def __init__(self, config_directory: str = '', app: Flask = None):
+        self.config_directory = config_directory
+        if app is not None:
+            self.initialize(app)
+
+    def initialize(self, app: Flask):
+        os.environ[f'{app.app.name.upper()}DIR'] = self.config_directory
         config = confuse.Configuration(app.name, __name__)
         self.url = config['database']['url'].get(str)
         self.pool_size = config['database']['pool_size'].get(int)
@@ -134,7 +141,7 @@ class FlaskData(Database):
                 logger.error('Database migration Failed: ={}'.format(err))
         elif self.type is DatabaseType.SQL:
             manager = MigrationManager()
-            manager.config.url = self.url
+            manager.config.mongo_url = self.url
             manager.config.mongo_migrations_path = self.migration_directory
             manager.run()
 
