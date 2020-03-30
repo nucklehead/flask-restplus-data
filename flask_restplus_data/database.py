@@ -95,7 +95,7 @@ class FlaskData(Database):
             self.initialize(app)
 
     def initialize(self, app: Flask):
-        os.environ[f'{app.app.name.upper()}DIR'] = self.config_directory
+        os.environ[f'{app.name.upper()}DIR'] = self.config_directory
         config = confuse.Configuration(app.name, __name__)
         self.url = config['database']['url'].get(str)
         self.pool_size = config['database']['pool_size'].get(int)
