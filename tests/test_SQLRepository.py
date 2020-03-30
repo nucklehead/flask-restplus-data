@@ -13,13 +13,11 @@ from sqlalchemy import orm
 from flask_restplus_data.database import FlaskData
 from tests.resources.test_migrations import mongodb_migrations, postgres_migrations
 
-os.environ['MONGODBAPPDIR'] = os.path.dirname(mongodb_migrations.__file__)
-os.environ['POSTGRESAPPDIR'] = os.path.dirname(postgres_migrations.__file__)
 mongo_app = Flask('mongodbapp')
 postgres_app = Flask('postgresapp')
 Session.connect = MagicMock()
-postgres_flask_data = FlaskData(postgres_app)
-mongodb_flask_data = FlaskData(mongo_app)
+postgres_flask_data = FlaskData(os.path.dirname(postgres_migrations.__file__), postgres_app)
+mongodb_flask_data = FlaskData(os.path.dirname(mongodb_migrations.__file__), mongo_app)
 
 
 class PostgresModel(postgres_flask_data.Model):

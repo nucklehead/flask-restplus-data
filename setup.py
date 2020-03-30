@@ -42,4 +42,6 @@ setup(name='flask_restplus_data',
           'flask-sqlalchemy==2.4.1',
           'Flask-MongoAlchemy==0.7.2',
           'yoyo-migrations==6.1.0',
+          'mongodb-migrations==0.7.0',
       ])
+

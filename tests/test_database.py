@@ -13,8 +13,6 @@ from tests.resources.test_migrations import postgres_migrations, mongodb_migrati
 
 class Test_FlaskData(unittest.TestCase):
     def setUp(self):
-        os.environ['MONGODBAPPDIR'] = os.path.dirname(mongodb_migrations.__file__)
-        os.environ['POSTGRESAPPDIR'] = os.path.dirname(postgres_migrations.__file__)
         self.mongo_app = Flask('mongodbapp')
         self.postgres_app = Flask('postgresapp')
         self.fake_migration = MagicMock()
@@ -22,8 +20,8 @@ class Test_FlaskData(unittest.TestCase):
         self.mongo_app.run = MagicMock()
         Session.connect = MagicMock()
         FlaskData.apply_migrations = self.fake_migration
-        self.postgres_flask_data = FlaskData(self.postgres_app)
-        self.mongodb_flask_data = FlaskData(self.mongo_app)
+        self.postgres_flask_data = FlaskData(os.path.dirname(postgres_migrations.__file__), self.postgres_app)
+        self.mongodb_flask_data = FlaskData(os.path.dirname(mongodb_migrations.__file__), self.mongo_app)
 
     def test_postgres_config(self):
         self.assertEqual('postgres://test', self.postgres_flask_data.url)
@@ -65,13 +63,11 @@ class Test_FlaskDataModel(unittest.TestCase):
         return Model
 
     def setUp(self):
-        os.environ['MONGODBAPPDIR'] = os.path.dirname(mongodb_migrations.__file__)
-        os.environ['POSTGRESAPPDIR'] = os.path.dirname(postgres_migrations.__file__)
         self.mongo_app = Flask('mongodbapp')
         self.postgres_app = Flask('postgresapp')
         Session.connect = MagicMock()
-        self.postgres_flask_data = FlaskData(self.postgres_app)
-        self.mongodb_flask_data = FlaskData(self.mongo_app)
+        self.postgres_flask_data = FlaskData( os.path.dirname(postgres_migrations.__file__), self.postgres_app)
+        self.mongodb_flask_data = FlaskData(os.path.dirname(mongodb_migrations.__file__), self.mongo_app)
 
         self.PostgresModel = self.create_model(self.postgres_flask_data)
         self.MongoModel = Test_FlaskDataModel.create_model(self.mongodb_flask_data)
