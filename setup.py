@@ -6,7 +6,7 @@ this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
-version = '0.0.7'
+version = '0.0.8'
 author = 'nucklehead'
 github_url = f'https://github.com/{author}/flask-restplus-data'
 
@@ -38,7 +38,7 @@ setup(name='flask_restplus_data',
       packages=find_packages(exclude=['test']),
       install_requires=[
           'confuse==1.0.0',
-          'psycopg2-binary==2.7.7',
+          'psycopg2-binary==2.8.6',
           'flask-sqlalchemy==2.4.1',
           'Flask-MongoAlchemy==0.7.2',
           'yoyo-migrations==6.1.0',

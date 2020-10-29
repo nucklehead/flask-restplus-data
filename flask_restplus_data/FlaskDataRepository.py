@@ -60,7 +60,7 @@ def create_new_sql_repo_class(repo_class: type):
             self.primary_keys = primary_keys
 
         def __enter__(self):
-            self.session = orm.sessionmaker(create_engine(self.model_class.url))()
+            self.session = orm.sessionmaker(self.model_class.db.engine)()
             return self
 
         def __exit__(self, exc_type, exc_val, exc_tb):
