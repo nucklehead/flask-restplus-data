@@ -123,6 +123,7 @@ class FlaskData(Database):
             app.config['MONGOALCHEMY_CONNECTION_STRING'] = self.url
             db = MongoAlchemy(app)
             setattr(self, 'Model', db.Document)
+        setattr(self.Model, 'db', db)
         setattr(self.Model, 'url', self.url)
         setattr(self.Model, 'db_type', self.type)
         return db
